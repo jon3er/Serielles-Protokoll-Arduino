@@ -1,15 +1,20 @@
 #include <Arduino.h>
 
 
-void setup() {
-  // initialize digital pin LED_BUILTIN as an output.
-  pinMode(LED_BUILTIN, OUTPUT);
+void setup(){
+
+  Serial.begin(250000); //initialize serial communication at a 9600 baud rate
+
 }
 
-// the loop function runs over and over again forever
-void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(100);                      // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);   // turn the LED off by making the voltage LOW
-  delay(100);                      // wait for a second
+
+void loop(){
+
+  Serial.write(255);
+  Serial.write(0);
+  Serial.write(1);
+  Serial.println(1,BIN);
+
+  delay(100);
+
 }
