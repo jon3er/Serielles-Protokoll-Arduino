@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <uart_com.h>
+#include <uart.h>
 
 void uart_com()
 {
@@ -14,7 +14,7 @@ void uart_com()
     msg_read = Serial.read();
     
 
-    if (msg_read == 55)
+    //if (msg_read == 55)
     {
         for (int i=0 ; i < int(sizeof(UartDataOut1)); i++)
         {

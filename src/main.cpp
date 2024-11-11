@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include <uart_com.h>
+#include <uart.h>
 
 void setup(){
 
@@ -13,14 +13,8 @@ void setup(){
 
 void loop(){
 
-  uart_com();
+  //uart_com();
 
-  /*
-  Serial.write(255);
-  Serial.write(0);
-  Serial.write(1);
-  Serial.println(1,BIN);
-
-  delay(100);
-  */
+  uart_test();
+  
 }
