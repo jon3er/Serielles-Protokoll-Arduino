@@ -13,8 +13,8 @@ void setup(){
 
 void loop(){
 
-  //uart_com();
+  uart_com();
 
-  uart_test();
+  //uart_test();
   
 }
