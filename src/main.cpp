@@ -15,6 +15,13 @@ void loop(){
 
   uart_passthrough();
 
+  int BitNumb;
+  bool ComAktiv;
+  int Msg[38]
+
+
+  void uart_testcom(int &BitNumb, bool &ComAktiv, int *Msg, int *DataIn, int *DataOut)
+
   //uart_test();
   
 }
