@@ -3,6 +3,12 @@
 //kommunikations fkt
 void uart_com();
 
+void Startup_com();
+
+int Uart_Start_Com();
+
+int Uart_Data_Com();
+
 //test fkt
 void uart_test();
 
