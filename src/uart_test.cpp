@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <uart.h>
 
 int SendDelay = 48; // Delay in MuS
 int bit_numb;

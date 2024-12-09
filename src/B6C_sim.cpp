@@ -13,6 +13,8 @@ void Startup_com(bool &Connected)
 
 }
 
+
+//to do verkleinern der funktions größe
 int Uart_Start_Com(bool &Connected, int &bytecnt, int &msgNumber, int (&Data_in)[msgtype::number][msgtype::Maxlength], int (&Data_out)[msgtype::number][msgtype::Maxlength])
 {
 	
@@ -228,6 +230,8 @@ int Uart_Data_Com(bool &Connected, int &bytecnt, int &msgNumber, int (&Data_in)[
 	}
 }
 
+
+// -------ALT--------
 void uart_testcom(int &bit_numb, bool &com_aktiv, int *msg, int *data_in, int *data_out)
 {
 

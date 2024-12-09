@@ -1,5 +1,7 @@
 #pragma once
 
+// enum Datenstrukturen
+
 // Länge der Datenpackete
 typedef enum e_msgbytesLength
 {
