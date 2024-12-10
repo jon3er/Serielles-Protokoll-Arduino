@@ -46,10 +46,14 @@ typedef enum e_messages
     StartMsg4 = 3,
     StartFin = 4,
 
+    //start array info
+    MaxLgthStrt = 34,
+    numberStart  = 4,
+
     ComMsg1 = 0,
     ComMsg2 = 1,
 
-    //array info
-    Maxlength = 34,
-    number  = 5,
+    MaxLgthCom = 20,    
+    numberCom = 2,
+
 }msgtype;

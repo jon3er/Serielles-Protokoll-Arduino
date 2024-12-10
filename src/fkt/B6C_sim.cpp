@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include <uart.h>
-#include <uart_msg.h>
+#include <B6C_sim.h>
+#include <e_uart_msg.h>
 
 
 void Startup_com(bool &Connected)
@@ -15,7 +15,7 @@ void Startup_com(bool &Connected)
 
 
 //to do verkleinern der funktions größe
-int Uart_Start_Com(bool &Connected, int &bytecnt, int &msgNumber, int (&Data_in)[msgtype::number][msgtype::Maxlength], int (&Data_out)[msgtype::number][msgtype::Maxlength])
+int Uart_Start_Com(bool &Connected, int &bytecnt, int &msgNumber, int (&Data_in)[msgtype::numberStart][msgtype::MaxLgthStrt], int (&Data_out)[msgtype::numberStart][msgtype::MaxLgthStrt])
 {
 	
 	int SerialAvailable = Serial.available();
@@ -154,7 +154,14 @@ switch (bytecnt)
 
 }
 
-int Uart_Data_Com(bool &Connected, int &bytecnt, int &msgNumber, int (&Data_in)[msgtype::number][msgtype::Maxlength], int (&Data_out)[msgtype::number][msgtype::Maxlength])
+/// @brief 
+/// @param Connected 
+/// @param bytecnt 
+/// @param msgNumber 
+/// @param Data_in 
+/// @param Data_out 
+/// @return 
+int Uart_Data_Com(bool &Connected, int &bytecnt, int &msgNumber, int (&Data_in)[msgtype::numberCom][msgtype::MaxLgthCom], int (&Data_out)[msgtype::numberCom][msgtype::MaxLgthCom])
 {
 
 	if (!Connected)

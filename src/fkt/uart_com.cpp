@@ -1,6 +1,5 @@
 #include <Arduino.h>
-#include <uart.h>
-
+/*
 void uart_com()
 {
     //msg
@@ -64,3 +63,29 @@ void uart_com()
     }
  
 }
+
+bool uart_timeout(int TimeOutCnt, int MaxTimeOut)
+{
+  // Time Out Counter
+  if (Serial.available() == 0)
+  {
+    delay(1);
+    TimeOutCnt++;
+  }
+  else
+  {
+    TimeOutCnt = 0;
+  }
+  
+  //Connection lost
+  if (TimeOutCnt < MaxTimeOut)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+
+};
+*/
