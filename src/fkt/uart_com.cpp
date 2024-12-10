@@ -1,5 +1,5 @@
 #include <Arduino.h>
-/*
+
 void uart_com()
 {
     //msg
@@ -88,4 +88,3 @@ bool uart_timeout(int TimeOutCnt, int MaxTimeOut)
   }
 
 };
-*/
