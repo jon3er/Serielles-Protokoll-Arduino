@@ -23,25 +23,32 @@ void loop(){
   int BitNumb;
   int MsgNumb;
   bool ComAktiv = false;
-  int ComStep;
+  int ComStep=0;
   int ComStatus;
-  int TimeOutCnt;
+  int TimeOutCnt=0;
   int MaxTimeOut= 5000;
 
     //set Var for startup
   int DataInStart[msgtype::numberStart][msgtype::MaxLgthStrt] ={
-    [msgtype::StartMsg1]=85 ,32 ,240,
-    [msgtype::StartMsg2]=85, 54, 15, 39, 0, 0,232, 3, 208, 7, 184, 11, 184, 11, 158, 0, 232, 3, 0, 0, 5, 208, 7, 0,
-    [msgtype::StartMsg3]=85, 97, 76, 65, 66, 69, 76, 48, 208, 7,
-    [msgtype::StartMsg4]=85, 129, 208, 7, 0, 0, 200, 0, 0, 0, 1, 54, 16, 1, 192, 100, 0, 0, 0, 30, 30, 16, 39, 0, 0, 0, 200, 0, 48, 117, 4, 0, 0, 0,
+    //msg 1
+    {85 ,32 ,240,},
+    //msg 2
+    {85, 54, 15, 39, 0, 0,232, 3, 208, 7, 184, 11, 184, 11, 158, 0, 232, 3, 0, 0, 5, 208, 7, 0},
+    //msg 3
+    {85, 97, 76, 65, 66, 69, 76, 48, 208, 7,},
+    //msg 4
+    {85, 129, 208, 7, 0, 0, 200, 0, 0, 0, 1, 54, 16, 1, 192, 100, 0, 0, 0, 30, 30, 16, 39, 0, 0, 0, 200, 0, 48, 117, 4, 0, 0, 0}
   };
+
 
   int DataOutStart[msgtype::numberStart][msgtype::MaxLgthStrt];
 
   //set Var for Communication
   int DataInCom[msgtype::numberCom][msgtype::MaxLgthCom]={
-    [msgtype::ComMsg1]=85, 72, 25, 4, 23, 4, 239, 55, 239, 55,   4,  49,   0,  0,  0, 2, 0, 0, 0, 0,
-    [msgtype::ComMsg2]=85, 89, 33, 2,  0, 0,  83, 49,   0, 68, 224, 167, 255, 68, 76, 0, 0, 0, 0,
+    //Com msg 1
+    {85, 72, 25, 4, 23, 4, 239, 55, 239, 55,   4,  49,   0,  0,  0, 2, 0, 0, 0, 0},
+    //Com msg 2
+    {85, 89, 33, 2,  0, 0,  83, 49,   0, 68, 224, 167, 255, 68, 76, 0, 0, 0, 0}
   };
 
   int DataOutCom[msgtype::numberCom][msgtype::MaxLgthCom];
@@ -75,7 +82,7 @@ void loop(){
   }
   
  
-  //ComAktiv = uart_timeout(TimeOutCnt, MaxTimeOut);
+  ComAktiv = uart_timeout(TimeOutCnt, MaxTimeOut);
  
   if (!ComAktiv)
   {
