@@ -25,135 +25,138 @@ int Uart_Start_Com(bool &Connected, int &bytecnt, int &msgNumber, int (&Data_in)
 		return -1;
 	}
 
-	switch (msgNumber)
+	if (SerialAvailable)
 	{
-	case (msgtype::StartMsg1):
-		
-		switch (bytecnt)
+		switch (msgNumber)
 		{
-		case (msgbyte::Startup_msg1_RX):
-			//read Data
-			Data_in[msgNumber][bytecnt]= Serial.read();
-			//write Data
-			Serial.write(Data_out[msgNumber][bytecnt]);
-			//next Msg
-			msgNumber++;
-			bytecnt = 0;
-			break;
-		
-		default:
-			//read Data
-			Data_in[msgNumber][bytecnt]= Serial.read();
-			//Write Data
-			Serial.write(Data_in[msgNumber][bytecnt]);
-			//next byte
-			bytecnt++;
-			break;
-		}
+		case (msgtype::StartMsg1):
 
-		break;
-	case (msgtype::StartMsg2):
-		
-		switch (bytecnt)
-		{
-		
-		case msgbyte::Commander_byte_pos ... msgbyte::Startup_msg2_RX:
-			//read Data
-			Data_in[msgNumber][bytecnt]= Serial.read();
-			//write Data
-			Serial.write(Data_out[msgNumber][bytecnt]);
-			//next byte
-			bytecnt++;
-			if (msgbyte::Startup_msg2_RX == msgNumber)
+			switch (bytecnt)
 			{
+			case (msgbyte::Startup_msg1_RX):
+				//read Data
+				Data_in[msgNumber][bytecnt]= Serial.read();
+				//write Data
+				Serial.write(Data_out[msgNumber][bytecnt]);
+				//next Msg
 				msgNumber++;
 				bytecnt = 0;
+				break;
+
+			default:
+				//read Data
+				Data_in[msgNumber][bytecnt]= Serial.read();
+				//Write Data
+				Serial.write(Data_in[msgNumber][bytecnt]);
+				//next byte
+				bytecnt++;
+				break;
+			}
+
+			break;
+		case (msgtype::StartMsg2):
+
+			switch (bytecnt)
+			{
+			
+			case msgbyte::Commander_byte_pos ... msgbyte::Startup_msg2_RX:
+				//read Data
+				Data_in[msgNumber][bytecnt]= Serial.read();
+				//write Data
+				Serial.write(Data_out[msgNumber][bytecnt]);
+				//next byte
+				bytecnt++;
+				if (msgbyte::Startup_msg2_RX == msgNumber)
+				{
+					msgNumber++;
+					bytecnt = 0;
+				}
+
+
+			default:
+				//read Data
+				Data_in[msgNumber][bytecnt]= Serial.read();
+				//Write Data
+				Serial.write(Data_in[msgNumber][bytecnt]);
+				//next byte
+				bytecnt++;
+				break;
+			}
+
+			break;
+		case (msgtype::StartMsg3):
+
+			switch (bytecnt)
+			{
+			
+			case msgbyte::Commander_byte_pos ... msgbyte::Startup_msg3_RX:
+				//read Data
+				Data_in[msgNumber][bytecnt]= Serial.read();
+				//write Data
+				Serial.write(Data_out[msgNumber][bytecnt]);
+				//next Msg
+				bytecnt++;
+				if (msgbyte::Startup_msg3_RX == msgNumber)
+				{
+					msgNumber++;
+					bytecnt = 0;
+				}
+
+
+			default:
+				//read Data
+				Data_in[msgNumber][bytecnt]= Serial.read();
+				//Write Data
+				Serial.write(Data_in[msgNumber][bytecnt]);
+				//next byte
+				bytecnt++;
+				break;
 			}
 
 
+			break;
+		case (msgtype::StartMsg4):
+
+			switch (bytecnt)
+				{
+				
+				case msgbyte::Commander_byte_pos ... msgbyte::Startup_msg4_RX:
+					//read Data
+					Data_in[msgNumber][bytecnt]= Serial.read();
+					//write Data
+					Serial.write(Data_out[msgNumber][bytecnt]);
+					//next Msg
+					bytecnt++;msgNumber++;
+					if (msgbyte::Startup_msg4_RX == msgNumber)
+					{
+						msgNumber++;
+						bytecnt = 0;
+
+						return 1;
+					}
+
+
+				default:
+					//read Data
+					Data_in[msgNumber][bytecnt]= Serial.read();
+					//Write Data
+					Serial.write(Data_in[msgNumber][bytecnt]);
+					//next byte
+					bytecnt++;
+					break;
+				}
+
+				break;
+
 		default:
-			//read Data
-			Data_in[msgNumber][bytecnt]= Serial.read();
-			//Write Data
-			Serial.write(Data_in[msgNumber][bytecnt]);
-			//next byte
-			bytecnt++;
 			break;
 		}
 
-		break;
-	case (msgtype::StartMsg3):
-		
-		switch (bytecnt)
-		{
-		
-		case msgbyte::Commander_byte_pos ... msgbyte::Startup_msg3_RX:
-			//read Data
-			Data_in[msgNumber][bytecnt]= Serial.read();
-			//write Data
-			Serial.write(Data_out[msgNumber][bytecnt]);
-			//next Msg
-			bytecnt++;
-			if (msgbyte::Startup_msg3_RX == msgNumber)
-			{
-				msgNumber++;
-				bytecnt = 0;
-			}
+		return 0;
 
-
-		default:
-			//read Data
-			Data_in[msgNumber][bytecnt]= Serial.read();
-			//Write Data
-			Serial.write(Data_in[msgNumber][bytecnt]);
-			//next byte
-			bytecnt++;
-			break;
-		}
-
-
-		break;
-	case (msgtype::StartMsg4):
-		
-switch (bytecnt)
-		{
-		
-		case msgbyte::Commander_byte_pos ... msgbyte::Startup_msg4_RX:
-			//read Data
-			Data_in[msgNumber][bytecnt]= Serial.read();
-			//write Data
-			Serial.write(Data_out[msgNumber][bytecnt]);
-			//next Msg
-			bytecnt++;msgNumber++;
-			if (msgbyte::Startup_msg4_RX == msgNumber)
-			{
-				msgNumber++;
-				bytecnt = 0;
-
-				return 1;
-			}
-
-
-		default:
-			//read Data
-			Data_in[msgNumber][bytecnt]= Serial.read();
-			//Write Data
-			Serial.write(Data_in[msgNumber][bytecnt]);
-			//next byte
-			bytecnt++;
-			break;
-		}
-
-		break;
-	
-	default:
-		break;
 	}
-
-	return 0;
-
+	
 }
-
 /// @brief 
 /// @param Connected 
 /// @param bytecnt 

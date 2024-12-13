@@ -66,11 +66,13 @@ void uart_com()
 
 bool uart_timeout(int TimeOutCnt, int MaxTimeOut)
 {
+  int cnt;
   // Time Out Counter
   if (Serial.available() == 0)
   {
-    delay(1);
-    TimeOutCnt++;
+    ;
+      TimeOutCnt++;
+    
   }
   else
   {
