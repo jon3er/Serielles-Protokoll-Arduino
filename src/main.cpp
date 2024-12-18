@@ -18,7 +18,8 @@ bool LcdPrint=false;
 int ComStep=0;
 int ComStatus=0;
 int TimeOutCnt=0;
-int MaxTimeOut=5000;
+int TimeLastCom=0;
+int MaxTimeOut=1000;
 int VarBuffer=0;
 int CoolDown=0;
 int cnt=0;
@@ -50,8 +51,8 @@ int DataOutStart[msgtype::numberStart][msgtype::MaxLgthStrt];
 int DataInCom[msgtype::numberCom][msgtype::MaxLgthCom]={
     //Com msg 1
     //{85, 72, 25, 4, 23, 4, 239, 55, 239, 55,   4,  42,   69,  0,  0, 2, 0, 0, 0, 0},
-    //                                                    ____ <- winkel              
-    {0x55,0x48,0x19,0x04,0x17,0x04,0xEF,0x37,0xEF,0x37,0x04,0x31,0x40,0x00,0x00,0x02,0x00,0x00,0x00,0x00},
+    //                                                      ____ <- winkel              
+    {0x55,0x48,0x19,0x04,0x17,0x04,0xEF,0x37,0xEF,0x37,0x04,0x5A,0x40,0x00,0x00,0x02,0x00,0x00,0x00,0x00},
     //Com msg 2
     //{85, 89, 33, 2,  0, 0,  83, 49,   0, 68, 224, 167, 255, 68, 76, 0, 0, 0, 0}
     {0x55,0x59,0x21,0x02,0x00,0x00,0x53,0x31,0x00,0x44,0xE0,0xA7,0xFF,0x44,0x4C,0x00,0x00,0x00,0x00}
@@ -162,6 +163,27 @@ else if (StartupFin && (cnt > 0 ))
   }
 }
 
+//Check connection
+if (Serial.available() == 0)
+{
+  TimeOutCnt=millis()-TimeLastCom;
+  if (TimeOutCnt > MaxTimeOut)
+  {
+    cnt = 0;
+    MsgNumb=0;
+    BitNumb=0;
+    ComAktiv = false;
+    StartupFin = false;
+    delay(100);
+  }
+}
+else
+{
+  TimeLastCom = millis();
+}
+
+
+
 
 //Uart_Test(ComAktiv, BitNumb, MsgNumb, DataInStart, DataOutStart);
 
@@ -182,68 +204,4 @@ else if (StartupFin && (cnt > 0 ))
 */
 
 
-/*
-Startup_com(ComAktiv);
-ComAktiv = uart_timeout(TimeOutCnt, MaxTimeOut);
-
-if (ComAktiv && (Serial.available()>0))
-{
-  Serial.write(0x55);
-}
-else if (!ComAktiv)
-{
-  Serial.write(0xaa);
-}
-*/
-
-
-
-//test serial write
-
-/*
-// Com Start
-  switch (ComStep)
-  {
-  case 0:
-
-    if ((combyte::Startbyte == Serial.read()) && !ComAktiv)
-    //if (true)
-    {
-				ComAktiv = true;
-    }
-
-    if (ComAktiv)
-    {
-      ComStep = 1;
-
-    };
-    delay(10);
-    
-    break;
-  case 1:
-    ComStatus = Uart_Start_Com_1(ComAktiv, BitNumb, MsgNumb, DataInStart[BitNumb][MsgNumb], DataOutStart[BitNumb][MsgNumb]);
-
-    if (ComStatus == 1)
-    {
-      ComStep= 99;
-    };
-    
-    break;
-  default:
-    
-    ComStatus = Uart_Data_Com(ComAktiv, BitNumb, MsgNumb, DataInCom, DataOutCom);
-    
-    break;
-  }
-  */
-  
-
- // Time out
- // ComAktiv = uart_timeout(TimeOutCnt, MaxTimeOut);
- //
- // if (!ComAktiv)
- // {
- //   ComStep = 0;
- // }
- //
 }
