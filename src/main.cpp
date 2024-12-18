@@ -4,6 +4,21 @@
 #include <uart_test.h>
 #include <e_uart_msg.h>
 
+
+int DataInCom[msgtype::numberCom][msgtype::MaxLgthCom];
+double cnt=0;
+bool LcdPrint=false;
+double timer=0;
+double timerOld=0;
+bool msgEnd=false;
+int CommanderOutData0[6]={0x20,0x36,0x61,0x81,0x48,0x59};
+int CommanderOutData1[6]={0x20,0x21,0x5A,0x62,0x37,0x49};
+bool firstmsg;
+int msgNumber;
+int msgByte;
+int msgBuffer;
+
+
 void setup(){
 
   // Uart setup
@@ -18,8 +33,73 @@ void loop(){
   
   //Test fkt
   //uart_passthrough();
+  if (Serial.available() > 0)
+  {
+    msgBuffer = Serial.read();
+    firstmsg = true;
+    DataInCom[msgtype::numberCom][msgtype::MaxLgthCom]=Serial.read();
+    if (msgByte==0)
+    {
+      Serial.write(CommanderOutData0[msgByte]);  //Kopiert empfangene daten auf daten ausgang
+    }
+    else if (msgByte==1)
+    {
+      Serial.write(CommanderOutData1[msgByte]);
+    }
+    else
+    {
+      Serial.write(msgBuffer);
+    }
+    msgByte++;
+    msgEnd = false;
+    timerOld = timer;
+  }
+  else if (Serial.available() == 0)
+  {
+    timer = millis()-timerOld;;
+  }
+
+  if (timer >= 5)
+  {
+    msgEnd=true;
+    LcdPrint=true;
+  }
+  
+  if (timer >= 15)
+  {
+    //Broadcast signal
+    Serial.write(0x55);
+  }
+
+  if (timer > 1000)
+  {
+    //timeout
+    msgNumber=0;
+    firstmsg = false;
+  }
+
+  if (msgEnd)
+  {
+    msgByte=0;
+    if (msgNumber < 5)
+    {
+      msgNumber++;
+    }
+    else
+    {
+      msgNumber=4;
+
+    }
+  }
+
+
    //uart_test();
 
+
+
+
+
+  /*
   int BitNumb;
   int MsgNumb;
   bool ComAktiv;
@@ -74,6 +154,8 @@ else if (!ComAktiv)
 }
 */
 
+/*
+
 if (ComStep == 0)
 {
   Serial.write(0x99);
@@ -124,7 +206,8 @@ else
 
     break;
   }
-  
+ */
+
  //
  // ComAktiv = uart_timeout(TimeOutCnt, MaxTimeOut);
  //
