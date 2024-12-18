@@ -5,12 +5,13 @@
 
 void Startup_com(bool &Connected)
 {
-    
-    if (combyte::Startbyte == Serial.read() & !Connected)
-    {
-		Connected = true;
-    }
-
+    if (!Connected)
+	{
+    	if (combyte::Startbyte == Serial.read() & !Connected)
+	    {
+			Connected = true;
+    	}
+	}
 }
 
 int Uart_Data_RW(int &bytecnt, int &Data_in, int &Data_out)

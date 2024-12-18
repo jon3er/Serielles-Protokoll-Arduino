@@ -79,6 +79,9 @@ void setup(){
 void loop(){
 
 
+Startup_com(ComAktiv);
+
+//start up sollte funktionieren
 if (!StartupFin 
     && ((cnt == 3) || (cnt == 28) || (cnt == 39)))  
 {
@@ -95,14 +98,14 @@ if (!StartupFin
     cnt++;
   }
 }
-else if (cnt == 73)
+else if (!StartupFin &&cnt == 74)
 {
   cnt = 0;
   MsgNumb=0;
   BitNumb=0;
   StartupFin = true;
 }
-else
+else if (!StartupFin && ComAktiv)
 {
   //ComStatus=Uart_Data_RW(BitNumb, DataInStart[MsgNumb][BitNumb], DataOutStart[MsgNumb][BitNumb]);
   ComStatus=Uart_Data_RW(BitNumb, DataInStart[MsgNumb][BitNumb], DataOutStart[MsgNumb][BitNumb]);
@@ -116,7 +119,6 @@ if (StartupFin && (cnt == 20))
 {
   MsgNumb++;
   BitNumb=0;
-  delay(5);
   if ((Serial.read() == 0x55))
   {
     ComStatus=Uart_Data_RW(BitNumb, DataInCom[MsgNumb][BitNumb], DataOutCom[MsgNumb][BitNumb]);
@@ -135,7 +137,7 @@ else if (StartupFin && (cnt == 39))
 else if (StartupFin)
 {
 
-  if ((Serial.read() == 0x55) || cnt >0 )
+  if ((Serial.read() == 0x55) || cnt > 0 )
   {
   ComStatus=Uart_Data_RW(BitNumb, DataInCom[MsgNumb][BitNumb], DataOutCom[MsgNumb][BitNumb]);
   }
