@@ -104,6 +104,7 @@ else if (!StartupFin &&cnt == 74)
   MsgNumb=0;
   BitNumb=0;
   StartupFin = true;
+  delay(10);
 }
 else if (!StartupFin && ComAktiv)
 {
@@ -115,10 +116,13 @@ else if (!StartupFin && ComAktiv)
   }
 }
 
+
+// nutzdaten
 if (StartupFin && (cnt == 20))
 {
-  MsgNumb++;
+  MsgNumb=1;
   BitNumb=0;
+  delay(5);
   if ((Serial.read() == 0x55))
   {
     ComStatus=Uart_Data_RW(BitNumb, DataInCom[MsgNumb][BitNumb], DataOutCom[MsgNumb][BitNumb]);
@@ -129,18 +133,29 @@ if (StartupFin && (cnt == 20))
     cnt++;
   }
 }
-else if (StartupFin && (cnt == 39))
+else if (StartupFin && (cnt == 40))
 {
   cnt = 0;
   MsgNumb = 0;
+  BitNumb = 0;
+  delay(1);
 }
-else if (StartupFin)
+else if (StartupFin && (cnt == 0 )) 
 {
-
-  if ((Serial.read() == 0x55) || cnt > 0 )
+  if ((Serial.read() == 0x55))
   {
-  ComStatus=Uart_Data_RW(BitNumb, DataInCom[MsgNumb][BitNumb], DataOutCom[MsgNumb][BitNumb]);
+    ComStatus=Uart_Data_RW(BitNumb, DataInCom[MsgNumb][BitNumb], DataOutCom[MsgNumb][BitNumb]);
   }
+  
+  if (ComStatus == 1)
+  {
+    cnt++;
+  }
+}
+else if (StartupFin && (cnt > 0 ))
+{
+  ComStatus=Uart_Data_RW(BitNumb, DataInCom[MsgNumb][BitNumb], DataOutCom[MsgNumb][BitNumb]);
+  
   if (ComStatus == 1)
   {
     cnt++;
